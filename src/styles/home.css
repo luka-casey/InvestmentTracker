@@ -1,0 +1,86 @@
+/* universal background color */
+html, body {
+    background-color: #f0f0f0; /* Replace with your desired color */
+    height: 100%; /* Ensure the background covers the full viewport */
+    width: 100%;
+}
+  
+
+.mainTable {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* General Button Styling */
+.retrievePricesButton {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff; /* White text */
+    background-color: #1E88E5; /* Vibrant blue */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  }
+  
+  /* Hover and Active States */
+  .retrievePricesButton:hover {
+    background-color: #1565C0; /* Darker blue on hover */
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.15); /* Slightly larger shadow */
+  }
+  
+  .retrievePricesButton:active {
+    background-color: #0D47A1; /* Even darker blue when pressed */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Smaller shadow */
+    transform: translateY(2px); /* Slight press effect */
+  }
+  
+  /* Disabled State */
+  .retrievePricesButton:disabled {
+    background-color: #B0BEC5; /* Grey background for disabled state */
+    color: #ECEFF1; /* Light grey text */
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+  }
+  
+  .appTitle {
+    align-items: center;
+  }
+  
+  .heading {
+    text-align: center;
+    color: grey;
+  }
+
+  .pills {
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .pillsContainer {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .pillsHeading {
+    color: grey;
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 20px;
+  }
+
+  .stockGraphsRow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
