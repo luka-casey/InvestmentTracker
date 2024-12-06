@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import '../styles/home.css';
 import { fetchStocks } from '../services/apiServices.js';
 import StockTable from '../components/StockTable';
-import StockTotalsPills from '../components/StockTotalsPills.js';
-import '../styles/home.css';
 import StockPieChart from '../components/StockPieChart.js';
-import TotalProfitLoss from '../components/TotalProfitLoss.js'
-import TodayTotalPill from '../components/TodayTotalPill.js';
-import StockTotalsPercentPill from '../components/StockTotalsPercentPill.js';
-import TodayTotalChangePercentPill from '../components/TodayTotalChangePercentPill.js'
-import { format } from "date-fns";
 import StockSimpleLineChart from '../components/StockSimpleLineChart.js';
-
+import StockPills from '../components/StockPills.js';
+import HomeHeadings from '../components/HomeHeadings.js';
+import RetrievePricesButton from '../components/RetrievePricesButton.js';
 
 const Home = () => {
     const [stocks, setStocks] = useState([]);
@@ -18,55 +14,52 @@ const Home = () => {
     const [currentTime, setCurrentTime] = useState(new Date());
 
     useEffect(() => {
-        // Load cached stocks from local storage
         const cachedStocks = localStorage.getItem("stocks");
+
         if (cachedStocks) {
             setStocks(JSON.parse(cachedStocks));
         }
-    }, []); // Only run once on mount
+
+    }, []);
 
     const fetchStockData = async () => {
         setLoading(true);
+
         try {
-            const newStocks = await fetchStocks(); // Assuming fetchStocks is defined elsewhere
+            const newStocks = await fetchStocks();
             setStocks(newStocks);
+
             localStorage.setItem("stocks", JSON.stringify(newStocks));
-            setCurrentTime(new Date()); // Update time only when data is fetched
+
+            setCurrentTime(new Date());
+
         } catch (error) {
             console.error("Error fetching data:", error);
         }
+
         setLoading(false);
     };
-
-    const formattedDateTime = format(currentTime, "EEEE, do, yyyy, h:mm:ss a");
 
 
     return (
         <div className='mainContainer'>
-            <h1 className='heading'>Investment Tracker</h1>
-            <h2 className='heading'>{formattedDateTime}</h2>
+
+            <HomeHeadings currentTime={currentTime} />
 
             <div className='mainTable'>
-                <button className='retrievePricesButton' onClick={fetchStockData}>Retrieve Prices</button>
-                {loading && <p>Loading...</p>}
+
+                <RetrievePricesButton fetchStockData={fetchStockData} loading={loading} />
+
                 <StockTable stocks={stocks} />
-                <div className='pillsContainer'>
-                    <div className='pills'>
-                        <h1 className='pillsHeading'>All Time</h1>
-                        <StockTotalsPills stocks={stocks} />
-                        <TotalProfitLoss stocks={stocks} />
-                        <StockTotalsPercentPill stocks={stocks} />
-                    </div>
-                    <div className='pills'>
-                        <h1 className='pillsHeading'>Today</h1>
-                        <TodayTotalChangePercentPill stocks={stocks} />
-                        <TodayTotalPill stocks={stocks} />
-                    </div>
-                </div>
+
+                <StockPills stocks={stocks} />
 
                 <div className='stockGraphsRow'>
+
                     <StockSimpleLineChart />
+
                     <StockPieChart stocks={stocks} />
+
                 </div>
 
             </div>
