@@ -1,4 +1,4 @@
-import { saveToFirebase } from '../services/fireBaseService';
+import { saveToFirebase } from '../FirebaseService/fireBaseService';
 import { fetchAllStocks } from './fetchAllStocks';
 
 export const fetchStocks = async () => {

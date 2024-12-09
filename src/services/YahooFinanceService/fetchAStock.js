@@ -1,8 +1,8 @@
-import convertCurrency from '../services/convertCurrency';
-import getTotalChangePercent from '../services/getTotalChangePercent';
+import convertCurrency from '../../helpers/convertCurrency';
+import getTotalChangePercent from '../../helpers/getTotalChangePercent';
 import axios from 'axios';
-import sun from '../icons/sunb.png'
-import moon from '../icons/moon.svg'
+import sun from '../../icons/sunb.png'
+import moon from '../../icons/moon.svg'
 
 export const fetchAStock = async (stockName, stockSymbol, stockRegion, units, originalMarketPrice, fromCurrency, toCurrency, icon, isCrypto) => {
     try {

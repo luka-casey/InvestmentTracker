@@ -1,9 +1,9 @@
-import { authenticateUser } from './fireBaseService';
+import { authenticateUser } from '../FirebaseService/fireBaseService';
 import { fetchAStock } from './fetchAStock';
-import ethereumIcon from '../icons/ethereum.svg'
-import teslaIcon from '../icons/tesla.svg'
-import goldIcon from '../icons/gold.svg'
-import redoxIcon from '../icons/redox.svg'
+import ethereumIcon from '../../icons/ethereum.svg'
+import teslaIcon from '../../icons/tesla.svg'
+import goldIcon from '../../icons/gold.svg'
+import redoxIcon from '../../icons/redox.svg'
 
 export const fetchAllStocks = async () => {
     try {

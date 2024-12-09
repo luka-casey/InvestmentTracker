@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/home.css';
-import { fetchStocks } from '../services/apiServices.js';
+import { fetchStocks } from '../services/YahooFinanceService/fetchStocks.js'
 import StockTable from '../components/StockTable';
 import StockPieChart from '../components/StockPieChart.js';
 import StockSimpleLineChart from '../components/StockSimpleLineChart.js';
