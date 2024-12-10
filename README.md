@@ -1,1 +1,1 @@
-Creating a personalised app that tracks investments and presents useful specific to ones portfolio.
+Creating a personalised investment portfolio app that tracks stockmarket data
