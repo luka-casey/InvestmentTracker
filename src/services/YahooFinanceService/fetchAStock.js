@@ -4,6 +4,20 @@ import axios from 'axios';
 import sun from '../../icons/sunb.png'
 import moon from '../../icons/moon.svg'
 
+/**
+ * Fetches data for a specific stock.
+ *
+ * @param {string} stockName - The name of the stock.
+ * @param {string} stockSymbol - The stock's symbol (e.g., 'ETH-USD').
+ * @param {string} stockRegion - The stock's region (e.g., 'US', 'AU').
+ * @param {number} units - The number of units of the stock.
+ * @param {number} originalMarketPrice - How much $AUD was spent to purchase the stock.
+ * @param {string} fromCurrency - The currency used for conversion (e.g., 'USD').
+ * @param {string} toCurrency - The target currency for conversion (e.g., 'AUD').
+ * @param {string} icon - The icon representing the stock.
+ * @param {boolean} isCrypto - Indicates if the stock is a cryptocurrency.
+ * @returns {Promise<Object>} - A Promise resolving to an object with stock data.
+ */
 export const fetchAStock = async (stockName, stockSymbol, stockRegion, units, originalMarketPrice, fromCurrency, toCurrency, icon, isCrypto) => {
     try {
         const response = await getApiData(stockRegion, stockSymbol, process.env.REACT_APP_RAPID_API_KEY);
