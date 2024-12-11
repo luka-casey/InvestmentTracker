@@ -16,7 +16,7 @@ import moon from '../../icons/moon.svg'
  * @param {string} toCurrency - The target currency for conversion (e.g., 'AUD').
  * @param {string} icon - The icon representing the stock.
  * @param {boolean} isCrypto - Indicates if the stock is a cryptocurrency.
- * @returns {Promise<Object>} - A Promise resolving to an object with stock data.
+ * @returns {Promise<StockObject>} - A Promise resolving to an object with stock data.
  */
 export const fetchAStock = async (stockName, stockSymbol, stockRegion, units, originalMarketPrice, fromCurrency, toCurrency, icon, isCrypto) => {
     try {
@@ -31,6 +31,32 @@ export const fetchAStock = async (stockName, stockSymbol, stockRegion, units, or
     }
 };
 
+/**
+ * @typedef {Object} StockObject
+ * @property {string} name - The name of the stock or cryptocurrency.
+ * @property {number} units - The number of units held.
+ * @property {number} price - The converted price of one unit in the target currency.
+ * @property {string} todaysChange - The percentage change in price today as a formatted string.
+ * @property {number} totalChange - The total monetary change in the value of the stock compared to the original market price.
+ * @property {number} totalChangePercent - The total percentage change compared to the original market price.
+ * @property {string} icon - The icon representing the stock or cryptocurrency.
+ * @property {string} marketOpenIcon - An icon indicating whether the market is open or closed.
+ * @property {string} todaysChangeNumeral - The numerical value of today's change as a monetary amount.
+ */
+/**
+ * Creates a stock object with calculated properties based on input data.
+ * 
+ * @param {Object} data - The data from the stock API.
+ * @param {string} fromCurrency - The original currency of the stock or cryptocurrency.
+ * @param {string} toCurrency - The target currency for conversion.
+ * @param {number} originalMarketPrice - The original market price of the stock or cryptocurrency.
+ * @param {string} stockName - The name of the stock or cryptocurrency.
+ * @param {number} units - The number of units of the stock or cryptocurrency.
+ * @param {string} icon - The icon representing the stock or cryptocurrency.
+ * @param {boolean} isCrypto - Indicates if the stock is a cryptocurrency.
+ * @returns {Promise<StockObject>} The created stock object with calculated properties.
+ * @throws {Error} Throws an error if the object creation fails.
+ */
 export async function createStockObject(data, fromCurrency, toCurrency, originalMarketPrice, stockName, units, icon, isCrypto) {
 
     try {
