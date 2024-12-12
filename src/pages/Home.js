@@ -7,6 +7,7 @@ import StockSimpleLineChart from '../components/StockSimpleLineChart.js';
 import StockPills from '../components/StockPills.js';
 import HomeHeadings from '../components/HomeHeadings.js';
 import RetrievePricesButton from '../components/RetrievePricesButton.js';
+import WeeklyHighlites from '../components/WeeklyHighlites.js';
 
 const Home = () => {
     const [stocks, setStocks] = useState([]);
@@ -56,9 +57,11 @@ const Home = () => {
 
                 <div className='stockGraphsRow'>
 
-                    <StockSimpleLineChart />
+                    <StockSimpleLineChart  specificStockName={undefined}/>
 
                     <StockPieChart stocks={stocks} />
+
+                    <WeeklyHighlites />
 
                 </div>
 

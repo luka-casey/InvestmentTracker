@@ -12,12 +12,14 @@ const originalInvestments = {
 };
 
 
-const fetchAndFormatStockData = async () => {
+const fetchAndFormatStockData = async (specificStockName) => {
     const stocksCollection = collection(db, 'stocks');
     const querySnapshot = await getDocs(stocksCollection);
+    const formattedStocks = [];
 
-    return querySnapshot.docs.map(doc => {
+    querySnapshot.docs.forEach((doc) => {
         const stock = doc.data();
+
         const formattedDate = stock.dateTime.toDate().toLocaleDateString('en-US', {
             year: '2-digit',
             month: 'short',
@@ -30,15 +32,27 @@ const fetchAndFormatStockData = async () => {
             ? currentValue - originalInvestment.cost
             : 0;
 
-        return {
+        const formattedStock = {
             dateTime: formattedDate,
             profitOrLoss,
             originalDate: stock.dateTime.toDate(),
             stockId: stock.id,
             stockName: stock.name,
         };
+
+        if (specificStockName.specificStockName === undefined) {
+            formattedStocks.push(formattedStock);
+        }
+
+        if (specificStockName.specificStockName === formattedStock.stockName.toString()) {
+            formattedStocks.push(formattedStock);
+        }
     });
+
+    return formattedStocks;
 };
+
+
 
 
 const groupStocksByDateAndAggregateValues = (data) => {
@@ -52,7 +66,7 @@ const groupStocksByDateAndAggregateValues = (data) => {
         }
 
         if (
-            !groupedData[dateTime][stockName] || 
+            !groupedData[dateTime][stockName] ||
             groupedData[dateTime][stockName].originalDate < originalDate
         ) {
             groupedData[dateTime][stockName] = { profitOrLoss, originalDate };
@@ -89,13 +103,13 @@ const createYAxisTicks = (min, max, step = 100) => {
     return ticks;
 };
 
-const StockLineChart = () => {
+const StockLineChart = (specificStockName) => {
     const [stockData, setStockData] = useState([]);
     const [yAxisDomain, setYAxisDomain] = useState([0, 10000]);
 
     useEffect(() => {
         const fetchAndProcessStockData = async () => {
-            const rawData = await fetchAndFormatStockData();
+            const rawData = await fetchAndFormatStockData(specificStockName);
             const aggregatedData = groupStocksByDateAndAggregateValues(rawData);
             const yAxisRange = calculateDynamicYAxisDomain(aggregatedData);
 
