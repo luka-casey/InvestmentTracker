@@ -88,12 +88,11 @@ const WeeklyHighlites = () => {
     };
 
     return (
-        <div>
-            <h1>Best Stock this Week</h1>
+        <div style={{padding: '50px'}}>
             {bestStock?.stockName && (
                 <>
-                    <h2>{bestStock.stockName}</h2>
-                    <StockSimpleLineChart specificStockName={bestStock.stockName} />
+                    <h2 style={{color: 'grey', textAlign: 'center'}}>Stock of the Week</h2>
+                    <StockSimpleLineChart specificStockName={bestStock.stockName} days={7} />
                 </>
             )}
         </div>

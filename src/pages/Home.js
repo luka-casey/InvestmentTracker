@@ -57,7 +57,7 @@ const Home = () => {
 
                 <div className='stockGraphsRow'>
 
-                    <StockSimpleLineChart  specificStockName={undefined}/>
+                    <StockSimpleLineChart specificStockName={"none"} />
 
                     <StockPieChart stocks={stocks} />
 

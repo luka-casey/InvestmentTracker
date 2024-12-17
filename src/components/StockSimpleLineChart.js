@@ -11,14 +11,22 @@ const originalInvestments = {
     Freelancer: { cost: 1096.67, units: 6451 }
 };
 
-
-const fetchAndFormatStockData = async (specificStockName) => {
+const fetchAndFormatStockData = async (specificStockName, days) => {
     const stocksCollection = collection(db, 'stocks');
     const querySnapshot = await getDocs(stocksCollection);
     const formattedStocks = [];
+    
+    const now = new Date();
+    const pastDate = new Date();
+    pastDate.setDate(now.getDate() - days);
 
     querySnapshot.docs.forEach((doc) => {
         const stock = doc.data();
+        const stockDate = stock.dateTime.toDate();
+
+        if (stockDate < pastDate || stockDate > now) {
+            return;
+        }
 
         const formattedDate = stock.dateTime.toDate().toLocaleDateString('en-US', {
             year: '2-digit',
@@ -35,25 +43,18 @@ const fetchAndFormatStockData = async (specificStockName) => {
         const formattedStock = {
             dateTime: formattedDate,
             profitOrLoss,
-            originalDate: stock.dateTime.toDate(),
+            originalDate: stockDate,
             stockId: stock.id,
             stockName: stock.name,
         };
 
-        if (specificStockName.specificStockName === undefined) {
-            formattedStocks.push(formattedStock);
-        }
-
-        if (specificStockName.specificStockName === formattedStock.stockName.toString()) {
+        if (specificStockName === "none" || specificStockName === formattedStock.stockName.toString()) {
             formattedStocks.push(formattedStock);
         }
     });
 
     return formattedStocks;
 };
-
-
-
 
 const groupStocksByDateAndAggregateValues = (data) => {
     const groupedData = {};
@@ -65,10 +66,7 @@ const groupStocksByDateAndAggregateValues = (data) => {
             groupedData[dateTime] = {};
         }
 
-        if (
-            !groupedData[dateTime][stockName] ||
-            groupedData[dateTime][stockName].originalDate < originalDate
-        ) {
+        if (!groupedData[dateTime][stockName] || groupedData[dateTime][stockName].originalDate < originalDate) {
             groupedData[dateTime][stockName] = { profitOrLoss, originalDate };
         }
     });
@@ -79,7 +77,6 @@ const groupStocksByDateAndAggregateValues = (data) => {
         originalDate: new Date(dateKey),
     })).sort((a, b) => a.originalDate - b.originalDate);
 };
-
 
 const calculateDynamicYAxisDomain = (data) => {
     if (data.length === 0) return [-10000, 10000];
@@ -94,7 +91,6 @@ const calculateDynamicYAxisDomain = (data) => {
     ];
 };
 
-
 const createYAxisTicks = (min, max, step = 100) => {
     const ticks = [];
     for (let i = min; i <= max; i += step) {
@@ -103,26 +99,33 @@ const createYAxisTicks = (min, max, step = 100) => {
     return ticks;
 };
 
-const StockLineChart = (specificStockName) => {
+const StockLineChart = ({ specificStockName, days }) => {
     const [stockData, setStockData] = useState([]);
     const [yAxisDomain, setYAxisDomain] = useState([0, 10000]);
+    const [title, setTitle] = useState("");
 
     useEffect(() => {
         const fetchAndProcessStockData = async () => {
-            const rawData = await fetchAndFormatStockData(specificStockName);
+            const rawData = await fetchAndFormatStockData(specificStockName, days);
             const aggregatedData = groupStocksByDateAndAggregateValues(rawData);
             const yAxisRange = calculateDynamicYAxisDomain(aggregatedData);
+
+            if (specificStockName === "none") {
+                setTitle("All Time Change");
+            } else {
+                setTitle(specificStockName);
+            }
 
             setStockData(aggregatedData);
             setYAxisDomain(yAxisRange);
         };
 
         fetchAndProcessStockData();
-    }, []);
+    }, [specificStockName, days]); // Re-run effect when specificStockName or days changes
 
     return (
         <div>
-            <h2 className='pillsHeading'>Total Worth</h2>
+            <h2 className='pillsHeading'>{title}</h2>
             <LineChart width={1000} height={250} data={stockData}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis
@@ -137,9 +140,7 @@ const StockLineChart = (specificStockName) => {
                     ticks={createYAxisTicks(yAxisDomain[0], yAxisDomain[1])}
                     fontSize="10px"
                 />
-                <Tooltip
-                    formatter={(value) => [`Total Value: $${value.toFixed(2)}`]}
-                />
+                <Tooltip formatter={(value) => [`Total Value: $${value.toFixed(2)}`]} />
                 <Line type="monotone" dataKey="profitOrLoss" stroke="#82ca9d" />
             </LineChart>
         </div>
