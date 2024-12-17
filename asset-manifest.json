@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/investment-tracker/static/css/main.395b5ca7.css",
-    "main.js": "/investment-tracker/static/js/main.3bbaf9fe.js",
-    "static/js/453.118c023e.chunk.js": "/investment-tracker/static/js/453.118c023e.chunk.js",
-    "static/media/sunb.png": "/investment-tracker/static/media/sunb.cc6e84d94509a9702303.png",
-    "static/media/redox.svg": "/investment-tracker/static/media/redox.686cc91f13726518d3206fe62a53753f.svg",
-    "static/media/gold.svg": "/investment-tracker/static/media/gold.7a14304f32543f583b18cea7ced59293.svg",
-    "static/media/moon.svg": "/investment-tracker/static/media/moon.cf4b3f98004f06c8ce82323a6b4ca601.svg",
-    "index.html": "/investment-tracker/index.html",
-    "static/media/tesla.svg": "/investment-tracker/static/media/tesla.ace606cbd1d86466920fd34bbf172377.svg",
-    "static/media/ethereum.svg": "/investment-tracker/static/media/ethereum.df265e367364f285053a1285ad8d418d.svg",
-    "main.395b5ca7.css.map": "/investment-tracker/static/css/main.395b5ca7.css.map",
-    "main.3bbaf9fe.js.map": "/investment-tracker/static/js/main.3bbaf9fe.js.map",
-    "453.118c023e.chunk.js.map": "/investment-tracker/static/js/453.118c023e.chunk.js.map"
+    "main.css": "/InvestmentTracker/static/css/main.395b5ca7.css",
+    "main.js": "/InvestmentTracker/static/js/main.d9c84171.js",
+    "static/js/453.118c023e.chunk.js": "/InvestmentTracker/static/js/453.118c023e.chunk.js",
+    "static/media/sunb.png": "/InvestmentTracker/static/media/sunb.cc6e84d94509a9702303.png",
+    "static/media/redox.svg": "/InvestmentTracker/static/media/redox.686cc91f13726518d3206fe62a53753f.svg",
+    "static/media/gold.svg": "/InvestmentTracker/static/media/gold.7a14304f32543f583b18cea7ced59293.svg",
+    "static/media/moon.svg": "/InvestmentTracker/static/media/moon.cf4b3f98004f06c8ce82323a6b4ca601.svg",
+    "index.html": "/InvestmentTracker/index.html",
+    "static/media/tesla.svg": "/InvestmentTracker/static/media/tesla.ace606cbd1d86466920fd34bbf172377.svg",
+    "static/media/ethereum.svg": "/InvestmentTracker/static/media/ethereum.df265e367364f285053a1285ad8d418d.svg",
+    "main.395b5ca7.css.map": "/InvestmentTracker/static/css/main.395b5ca7.css.map",
+    "main.d9c84171.js.map": "/InvestmentTracker/static/js/main.d9c84171.js.map",
+    "453.118c023e.chunk.js.map": "/InvestmentTracker/static/js/453.118c023e.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.395b5ca7.css",
-    "static/js/main.3bbaf9fe.js"
+    "static/js/main.d9c84171.js"
   ]
 }
