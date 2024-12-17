@@ -48,7 +48,7 @@ const Home = () => {
 
             <div className='mainTable'>
 
-                <RetrievePricesButton fetchStockData={fetchStockData} loading={loading} />
+                {/* <RetrievePricesButton fetchStockData={fetchStockData} loading={loading} /> */}
 
                 <StockTable stocks={stocks} />
 
