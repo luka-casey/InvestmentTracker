@@ -1,21 +1,21 @@
 {
   "files": {
     "main.css": "/InvestmentTracker/static/css/main.395b5ca7.css",
-    "main.js": "/InvestmentTracker/static/js/main.61e0db72.js",
+    "main.js": "/InvestmentTracker/static/js/main.d9c84171.js",
     "static/js/453.118c023e.chunk.js": "/InvestmentTracker/static/js/453.118c023e.chunk.js",
     "static/media/sunb.png": "/InvestmentTracker/static/media/sunb.cc6e84d94509a9702303.png",
-    "static/media/redox.svg": "/InvestmentTracker/static/media/redox.d849a909647641e9b065b50ec9cce0c6.svg",
+    "static/media/redox.svg": "/InvestmentTracker/static/media/redox.686cc91f13726518d3206fe62a53753f.svg",
     "static/media/gold.svg": "/InvestmentTracker/static/media/gold.7a14304f32543f583b18cea7ced59293.svg",
-    "static/media/moon.svg": "/InvestmentTracker/static/media/moon.b9137d52c875052541f592246a3a43c8.svg",
+    "static/media/moon.svg": "/InvestmentTracker/static/media/moon.cf4b3f98004f06c8ce82323a6b4ca601.svg",
     "index.html": "/InvestmentTracker/index.html",
-    "static/media/tesla.svg": "/InvestmentTracker/static/media/tesla.7a9847ef586185ddec845b5a1e4b58d3.svg",
+    "static/media/tesla.svg": "/InvestmentTracker/static/media/tesla.ace606cbd1d86466920fd34bbf172377.svg",
     "static/media/ethereum.svg": "/InvestmentTracker/static/media/ethereum.df265e367364f285053a1285ad8d418d.svg",
     "main.395b5ca7.css.map": "/InvestmentTracker/static/css/main.395b5ca7.css.map",
-    "main.61e0db72.js.map": "/InvestmentTracker/static/js/main.61e0db72.js.map",
+    "main.d9c84171.js.map": "/InvestmentTracker/static/js/main.d9c84171.js.map",
     "453.118c023e.chunk.js.map": "/InvestmentTracker/static/js/453.118c023e.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.395b5ca7.css",
-    "static/js/main.61e0db72.js"
+    "static/js/main.d9c84171.js"
   ]
 }
