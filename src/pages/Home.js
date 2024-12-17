@@ -49,6 +49,7 @@ const Home = () => {
             <div className='mainTable'>
 
                 {/* <RetrievePricesButton fetchStockData={fetchStockData} loading={loading} /> */}
+                <button>Temp</button>
 
                 <StockTable stocks={stocks} />
 
