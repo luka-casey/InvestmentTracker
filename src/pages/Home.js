@@ -44,13 +44,12 @@ const Home = () => {
 
     return (
         <div className='mainContainer'>
-            <h1>Testing123</h1>
 
             <HomeHeadings currentTime={currentTime} />
 
             <div className='mainTable'>
 
-                {/* <RetrievePricesButton fetchStockData={fetchStockData} loading={loading} /> */}
+                <RetrievePricesButton fetchStockData={fetchStockData} loading={loading} />
 
                 <StockTable stocks={stocks} />
 
