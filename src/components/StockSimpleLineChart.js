@@ -4,12 +4,18 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
 import { db } from '../services/FirebaseService/fireBaseService'; // Import your Firebase config
 
 const originalInvestments = {
-    Ethereum: { cost: 3000, units: 0.6238 },
-    Tesla: { cost: 2642.13, units: 5 },
-    "Global X Physical Gold": { cost: 1553.6, units: 47 },
-    Redox: { cost: 2478.58, units: 772 },
-    Freelancer: { cost: 1096.67, units: 6451 }
+    Ethereum: [
+        { cost: 3000, units: 0.6238 },
+        { cost: 2000, units: 0.371 },
+        { cost: 55, units: 0.01 },
+    ],
+    Tesla: [{ cost: 2642.13, units: 5 }],
+    "Global X Physical Gold": [{ cost: 1553.6, units: 47 }],
+    Redox: [{ cost: 2478.58, units: 772 }],
+    Freelancer: [{ cost: 1096.67, units: 6451 }],
 };
+
+
 
 const fetchAndFormatStockData = async (specificStockName, days) => {
     const stocksCollection = collection(db, 'stocks');
@@ -34,11 +40,22 @@ const fetchAndFormatStockData = async (specificStockName, days) => {
             day: 'numeric',
         });
 
-        const originalInvestment = originalInvestments[stock.name];
-        const currentValue = stock.price * stock.units;
-        const profitOrLoss = originalInvestment
-            ? currentValue - originalInvestment.cost
-            : 0;
+        const investments = originalInvestments[stock.name] || [];
+        let totalCost = 0;
+        let totalUnits = 0;
+
+        // Aggregate total cost and units from all investments
+        investments.forEach((investment) => {
+            totalCost += investment.cost;
+            totalUnits += investment.units;
+        });
+
+        const currentValue = stock.price * totalUnits;
+        const profitOrLoss = currentValue - totalCost;
+
+        if (stock.name === "Ethereum") {
+            console.log(`${stock.name} value is ${profitOrLoss}`);
+        }
 
         const formattedStock = {
             dateTime: formattedDate,
@@ -55,6 +72,7 @@ const fetchAndFormatStockData = async (specificStockName, days) => {
 
     return formattedStocks;
 };
+
 
 const groupStocksByDateAndAggregateValues = (data) => {
     const groupedData = {};
@@ -99,10 +117,11 @@ const createYAxisTicks = (min, max, step = 100) => {
     return ticks;
 };
 
-const StockLineChart = ({ specificStockName, days }) => {
+const StockLineChart = ({ specificStockName, days, dateInterval = 0 }) => {
     const [stockData, setStockData] = useState([]);
     const [yAxisDomain, setYAxisDomain] = useState([0, 10000]);
     const [title, setTitle] = useState("");
+    const [xDateInterval, setxDateInterval] = useState(0);
 
     useEffect(() => {
         const fetchAndProcessStockData = async () => {
@@ -118,10 +137,11 @@ const StockLineChart = ({ specificStockName, days }) => {
 
             setStockData(aggregatedData);
             setYAxisDomain(yAxisRange);
+            setxDateInterval(dateInterval)
         };
 
         fetchAndProcessStockData();
-    }, [specificStockName, days]); // Re-run effect when specificStockName or days changes
+    }, [specificStockName, days, dateInterval]); // Re-run effect when specificStockName or days changes
 
     return (
         <div>
@@ -132,7 +152,7 @@ const StockLineChart = ({ specificStockName, days }) => {
                     dataKey="dateTime"
                     angle={0}
                     textAnchor="end"
-                    interval={0}
+                    interval={xDateInterval}
                     fontSize="10px"
                 />
                 <YAxis
