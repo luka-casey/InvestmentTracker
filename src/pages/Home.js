@@ -44,6 +44,7 @@ const Home = () => {
 
     return (
         <div className='mainContainer'>
+
             <HomeHeadings currentTime={currentTime} />
 
             <div className='mainTable'>
@@ -57,7 +58,7 @@ const Home = () => {
 
                 <div className='stockGraphsRow'>
 
-                    <StockSimpleLineChart specificStockName={"none"} />
+                    <StockSimpleLineChart specificStockName={"none"} dateInterval={5} />
 
                     <StockPieChart stocks={stocks} />
 

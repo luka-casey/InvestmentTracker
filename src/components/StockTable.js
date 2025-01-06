@@ -103,7 +103,7 @@ const StockTable = ({ stocks }) => {
                                 <tr className="stock-table-row expanded-row">
                                     <td colSpan="9" className="stock-table-cell expanded-content">
                                         <div style={{display: "flex", justifyContent: "center"}}>
-                                            <StockSimpleLineChart specificStockName={stock.name} />
+                                            <StockSimpleLineChart specificStockName={stock.name} dateInterval={2} />
                                         </div>
                                     </td>
                                 </tr>

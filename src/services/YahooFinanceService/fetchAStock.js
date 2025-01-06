@@ -72,8 +72,6 @@ export async function createStockObject(data, fromCurrency, toCurrency, original
 
         const todaysChange = data.quoteSummary.result[0].price.regularMarketChangePercent.fmt;
 
-        console.log(todaysChange)
-
         const todaysChangePercentage = parseFloat(todaysChange);
 
         const todaysChangeNum = (todaysChangePercentage / 100) * currentMarketPrice;

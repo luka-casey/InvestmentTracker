@@ -14,3 +14,4 @@ export const fetchStocks = async () => {
         return [];
     }
 };
+
