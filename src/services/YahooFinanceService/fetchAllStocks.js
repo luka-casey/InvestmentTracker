@@ -10,33 +10,52 @@ export const fetchAllStocks = async () => {
     try {
         await authenticateUser();
         
-        const ethereumPrice1 = await fetchAStock('Ethereum', 'ETH-USD', 'US', 0.6238, 3000, 'USD', 'AUD', ethereumIcon, true);
+        const ethereumTransaction1 = await fetchAStock('Ethereum', 'ETH-USD', 'US', 0.6238, 3000, 'USD', 'AUD', ethereumIcon, true);
         const teslaPrice = await fetchAStock('Tesla', 'TSLA', 'US', 5, 2642.13, 'USD', 'AUD', teslaIcon, false);
         const globalXPhysicalGoldPrice = await fetchAStock('Global X Physical Gold', 'GOLD.AX', 'AU', 47, 1553.6, 'AUD', 'AUD', goldIcon, false);
         const redoxPrice = await fetchAStock('Redox', 'RDX.AX', 'AU', 772, 2478.58, 'AUD', 'AUD', redoxIcon, false);
         const freelancer = await fetchAStock('Freelancer', 'FLN.AX', 'AU', 6451, 1096.67, 'AUD', 'AUD', freelancerIcon, false)
-        const ethereumPrice2 = await fetchAStock('Ethereum2', 'ETH-USD', 'US', 0.371, 2000, 'USD', 'AUD', ethereumIcon, true);
+        const ethereumTransaction2 = await fetchAStock('Ethereum', 'ETH-USD', 'US', 0.371, 2000, 'USD', 'AUD', ethereumIcon, true);
+        const ethereumTransaction3 = await fetchAStock('Ethereum', 'ETH-USD', 'US', 0.01, 55, 'USD', 'AUD', ethereumIcon, true);
 
-        let ethereumPrice = {};
+        const ethereum = await processEthereumTransactions([ethereumTransaction1, ethereumTransaction2, ethereumTransaction3]);
+        console.log(ethereum);
 
-        ethereumPrice.name = ethereumPrice1.name;
-        ethereumPrice.units = ethereumPrice1.units + ethereumPrice2.units;
-        ethereumPrice.price = ethereumPrice1.price;
-        ethereumPrice.todaysChange = ethereumPrice1.todaysChange;
-        ethereumPrice.totalChange = ethereumPrice1.totalChange + ethereumPrice2.totalChange;
-        ethereumPrice.totalChangePercent = ethereumPrice1.totalChangePercent;
-        ethereumPrice.icon = ethereumPrice1.icon;
-        ethereumPrice.todaysChangeNumeral = (parseFloat(ethereumPrice1.todaysChangeNumeral) + parseFloat(ethereumPrice2.todaysChangeNumeral)).toFixed(2);
-        ethereumPrice.marketOpenIcon = ethereumPrice1.marketOpenIcon;
-
-
-        return [ethereumPrice, teslaPrice, globalXPhysicalGoldPrice, redoxPrice, freelancer];
+        return [ethereum, teslaPrice, globalXPhysicalGoldPrice, redoxPrice, freelancer];
 
     } catch (error) {
         console.error("Error fetching or saving stocks:", error);
         return [];
     }
 };
+
+async function processEthereumTransactions(transactions) {
+    let ethereum = {};
+
+    for (let i = 0; i < transactions.length; i++) {
+        const transaction = await transactions[i];
+
+        if (i === 0) {
+            // Initialize the ethereum object with the first transaction
+            ethereum.name = transaction.name;
+            ethereum.units = transaction.units;
+            ethereum.price = transaction.price;
+            ethereum.todaysChange = transaction.todaysChange;
+            ethereum.totalChange = transaction.totalChange;
+            ethereum.totalChangePercent = transaction.totalChangePercent;
+            ethereum.icon = transaction.icon;
+            ethereum.todaysChangeNumeral = parseFloat(transaction.todaysChangeNumeral).toFixed(2);
+            ethereum.marketOpenIcon = transaction.marketOpenIcon;
+        } else {
+            // Accumulate values for subsequent transactions
+            ethereum.units += transaction.units;
+            ethereum.totalChange += transaction.totalChange;
+            ethereum.todaysChangeNumeral = (parseFloat(ethereum.todaysChangeNumeral) + parseFloat(transaction.todaysChangeNumeral)).toFixed(2);
+        }
+    }
+
+    return ethereum;
+}
 
 
 // name: stockName,
