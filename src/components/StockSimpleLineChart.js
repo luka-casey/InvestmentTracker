@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 import { db } from '../services/FirebaseService/fireBaseService'; // Import your Firebase config
+import { format, parse } from "date-fns";
 
 const originalInvestments = {
     Ethereum: [
@@ -15,10 +16,28 @@ const originalInvestments = {
     Freelancer: [{ cost: 1096.67, units: 6451 }],
 };
 
+function parseFormattedDate(dateString) {
+    const [month, day, year] = dateString.split(' ').map(Number);
+    const fullYear = 2000 + year; // Assuming the year is in "yy" format
+    return new Date(fullYear, month - 1, day);
+}
 
+function formatDate(input) {
+    // Split the input string into month, day, and year
+    const [month, day, year] = input.split(" ").map(Number);
+  
+    // Adjust the year to ensure it's in the correct century
+    const fullYear = 2000 + year;
+  
+    // Create a new Date object
+    const parsedDate = new Date(fullYear, month - 1, day);
+  
+    // Format the date with timezone
+    return parsedDate;
+}
 
 const fetchAndFormatStockData = async (specificStockName, days) => {
-    const stocksCollection = collection(db, 'stocks');
+    const stocksCollection = collection(db, 'testForStocks');
     const querySnapshot = await getDocs(stocksCollection);
     const formattedStocks = [];
     
@@ -28,13 +47,14 @@ const fetchAndFormatStockData = async (specificStockName, days) => {
 
     querySnapshot.docs.forEach((doc) => {
         const stock = doc.data();
-        const stockDate = stock.dateTime.toDate();
+
+        const stockDate = formatDate(stock.date)
 
         if (stockDate < pastDate || stockDate > now) {
             return;
         }
 
-        const formattedDate = stock.dateTime.toDate().toLocaleDateString('en-US', {
+        const formattedDate = stockDate.toLocaleDateString('en-US', {
             year: '2-digit',
             month: 'short',
             day: 'numeric',

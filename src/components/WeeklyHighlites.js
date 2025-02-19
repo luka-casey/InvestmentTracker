@@ -14,6 +14,12 @@ const WeeklyHighlites = () => {
 
     }, []);
 
+    function parseFormattedDate(dateString) {
+        const [month, day, year] = dateString.split(' ').map(Number);
+        const fullYear = 2000 + year; // Assuming the year is in "yy" format
+        return new Date(fullYear, month - 1, day);
+    }
+
 
     const fetchBestStockOfWeek = async () => {
         const stocks = await fetchAndFormatStockData();
@@ -24,7 +30,7 @@ const WeeklyHighlites = () => {
     }
 
     const fetchAndFormatStockData = async () => {
-        const stocksCollection = collection(db, 'stocks');
+        const stocksCollection = collection(db, 'testForStocks');
         const querySnapshot = await getDocs(stocksCollection);
 
         const now = new Date();
@@ -35,7 +41,7 @@ const WeeklyHighlites = () => {
         return querySnapshot.docs
             .map((doc) => {
                 const stock = doc.data();
-                const date = stock.dateTime.toDate();
+                const date = parseFormattedDate(stock.date);
 
                 if (date < oneWeekAgo || date > now) {
                     return null;

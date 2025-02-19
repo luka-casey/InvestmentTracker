@@ -15,7 +15,7 @@ const Home = () => {
     const [currentTime, setCurrentTime] = useState(new Date());
 
     useEffect(() => {
-        const cachedStocks = localStorage.getItem("stocks");
+        const cachedStocks = localStorage.getItem("testForStocks");
 
         if (cachedStocks) {
             setStocks(JSON.parse(cachedStocks));
@@ -30,7 +30,7 @@ const Home = () => {
             const newStocks = await fetchStocks();
             setStocks(newStocks);
 
-            localStorage.setItem("stocks", JSON.stringify(newStocks));
+            localStorage.setItem("testForStocks", JSON.stringify(newStocks));
 
             setCurrentTime(new Date());
 

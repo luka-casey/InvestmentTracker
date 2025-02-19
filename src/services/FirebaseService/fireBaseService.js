@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { collection, addDoc, setDoc, getDocs, query, where } from "firebase/firestore";
 
 //https://console.firebase.google.com/u/0/project/investmenttracker-9e2e6/overview
 
@@ -28,12 +28,30 @@ export const authenticateUser = async () => {
     }
 };
 
+function getFormattedDate() {
+    const today = new Date();
+    const month = today.getMonth() + 1;
+    const day = today.getDate();
+    const year = today.getFullYear().toString().slice(-2);
+    return `${month} ${day} ${year}`;
+}
+
+
 export const saveToFirebase = async (stocks) => {
     try {
 
-        const stocksCollection = collection(db, "stocks"); // "stocks" is the collection name
+        const stocksCollection = collection(db, "testForStocks"); // "stocks" is the collection name
         
         for (const stock of stocks) {
+
+            const formattedDate = getFormattedDate(); // Get today's date format
+
+            const stockQuery = query(stocksCollection, 
+                where("name", "==", stock.name), 
+                where("date", "==", formattedDate)
+            );
+
+            const querySnapshot = await getDocs(stockQuery);
 
             const stockData = {
                 name: stock.name, // The name of the stock (e.g., 'Ethereum', 'Tesla')
@@ -43,10 +61,19 @@ export const saveToFirebase = async (stocks) => {
                 totalChange: stock.totalChange, // Total change in price
                 totalChangePercent: stock.totalChangePercent, // Total change percentage
                 icon: stock.icon, // The stock icon (for display purposes)
-                dateTime: serverTimestamp(), // Firestore server-side timestamp
+                date: formattedDate, // Firestore server-side timestamp
             };
 
-            await addDoc(stocksCollection, stockData); // Add the stock data to Firestore
+            if (!querySnapshot.empty) {
+                // If record exists, update the first found document
+                const existingDoc = querySnapshot.docs[0].ref;
+                await setDoc(existingDoc, stockData, { merge: true });
+                console.log(`✅ Updated stock record for ${stock.name} on ${formattedDate}`);
+            } else {
+                // If no record exists, create a new one
+                await addDoc(stocksCollection, stockData);
+                console.log(`🆕 Added new stock record for ${stock.name} on ${formattedDate}`);
+            }
         }
 
 
