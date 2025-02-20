@@ -12,7 +12,10 @@ const originalInvestments = {
     ],
     Tesla: [{ cost: 2642.13, units: 5 }],
     "Global X Physical Gold": [{ cost: 1553.6, units: 47 }],
-    Redox: [{ cost: 2478.58, units: 772 }],
+    Redox: [
+        { cost: 2478.58, units: 772 },
+        { cost: 998.77, units: 291 },
+    ],
     Freelancer: [{ cost: 1096.67, units: 6451 }],
 };
 
