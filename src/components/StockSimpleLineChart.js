@@ -9,6 +9,7 @@ const originalInvestments = {
         { cost: 3000, units: 0.6238 },
         { cost: 2000, units: 0.371 },
         { cost: 55, units: 0.01 },
+        { cost: 4135, units: 1}
     ],
     Tesla: [{ cost: 2642.13, units: 5 }],
     "Global X Physical Gold": [{ cost: 1553.6, units: 47 }],

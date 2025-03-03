@@ -18,8 +18,9 @@ export const fetchAllStocks = async () => {
         const ethereumTransaction2 = await fetchAStock('Ethereum', 'ETH-USD', 'US', 0.371, 2000, 'USD', 'AUD', ethereumIcon, true);
         const ethereumTransaction3 = await fetchAStock('Ethereum', 'ETH-USD', 'US', 0.01, 55, 'USD', 'AUD', ethereumIcon, true);
         const redoxTransaction2 = await fetchAStock('Redox', 'RDX.AX', 'AU', 291, 998.77, 'AUD', 'AUD', redoxIcon, false);
+        const ethereumTransaction4 = await fetchAStock('Ethereum', 'ETH-USD', 'US', 1, 4135, 'USD', 'AUD', ethereumIcon, true);
 
-        const ethereum = await processMultipleTransactions([ethereumTransaction1, ethereumTransaction2, ethereumTransaction3]);
+        const ethereum = await processMultipleTransactions([ethereumTransaction1, ethereumTransaction2, ethereumTransaction3, ethereumTransaction4]);
         console.log(ethereum);
 
         const redox = await processMultipleTransactions([redoxTransaction1, redoxTransaction2]);
