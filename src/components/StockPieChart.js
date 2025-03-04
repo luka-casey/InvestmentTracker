@@ -7,7 +7,7 @@ const StockPieChart = ({ stocks }) => {
         value: stock.units * parseFloat(stock.price),
     }));
 
-    const COLORS = ['#607ff0', '#818181', '#e8db23', '#e83323', '#187fed'];
+    const COLORS = ['#607ff0', '#e8db23', '#e83323'];
 
     // Custom label renderer for percentages
     const renderCustomLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
