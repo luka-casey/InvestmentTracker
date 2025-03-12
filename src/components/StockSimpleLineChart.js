@@ -142,6 +142,12 @@ const createYAxisTicks = (min, max, step = 100) => {
     return ticks;
 };
 
+const getLineColor = (profitOrLoss) => {
+    if (profitOrLoss > 0) return "#82ca9d";  // Green for profit
+    if (profitOrLoss < 0) return "#ff6347";  // Red for loss
+    return "#8884d8";  // Default color if neither
+};
+
 const StockLineChart = ({ specificStockName, days, dateInterval = 0 }) => {
     const [stockData, setStockData] = useState([]);
     const [yAxisDomain, setYAxisDomain] = useState([0, 10000]);
@@ -186,7 +192,10 @@ const StockLineChart = ({ specificStockName, days, dateInterval = 0 }) => {
                     fontSize="10px"
                 />
                 <Tooltip formatter={(value) => [`Total Value: $${value.toFixed(2)}`]} />
-                <Line type="monotone" dataKey="profitOrLoss" stroke="#82ca9d" />
+                <Line 
+                    type="monotone" 
+                    dataKey="profitOrLoss" 
+                    stroke={getLineColor(stockData[stockData.length - 1]?.profitOrLoss)} />
             </LineChart>
         </div>
     );
